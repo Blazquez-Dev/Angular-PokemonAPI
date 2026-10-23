@@ -1,0 +1,33 @@
+<a class="btn btn-outline-danger mb-3" routerLink="/pokemon">← Volver al listado</a>
+@if (pokemon$ | async; as p) {
+  <div class="card">
+    <div class="card-body">
+      <img class="img-fluid d-block mx-auto" width="220" height="220"
+           [src]="p.sprites.other?.['official-artwork']?.front_default || p.sprites.front_default" [alt]="p.name" />
+      <h2 class="text-capitalize text-center">#{{ p.id }} {{ p.name }}</h2>
+      <p class="text-center">
+        @for (t of p.types; track t.slot) {
+          <span class="badge text-bg-danger text-capitalize me-1">{{ t.type.name }}</span>
+        }
+      </p>
+      <table class="table table-sm w-auto mx-auto">
+        <tr><th>Altura</th><td>{{ p.height / 10 }} m</td></tr>
+        <tr><th>Peso</th><td>{{ p.weight / 10 }} kg</td></tr>
+        <tr><th>Exp. base</th><td>{{ p.base_experience }}</td></tr>
+      </table>
+      <h3 class="h5 mt-3">Habilidades</h3>
+      @for (a of p.abilities; track a.ability.name) {
+        <span class="badge text-bg-secondary text-capitalize me-1">{{ a.ability.name }}{{ a.is_hidden ? ' (oculta)' : '' }}</span>
+      }
+      <h3 class="h5 mt-3">Estadísticas</h3>
+      @for (s of p.stats; track s.stat.name) {
+        <div class="row align-items-center mb-1">
+          <div class="col-4 col-md-3 text-capitalize">{{ s.stat.name }}</div>
+          <div class="col"><ngb-progressbar type="danger" [value]="s.base_stat" [max]="255" [showValue]="true" /></div>
+        </div>
+      }
+    </div>
+  </div>
+} @else {
+  <div class="text-center my-5"><div class="spinner-border text-danger"></div></div>
+}

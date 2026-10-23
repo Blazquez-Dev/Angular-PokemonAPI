@@ -1,0 +1,5 @@
+<a class="card h-100 text-center text-decoration-none p-3" [routerLink]="['/berries', id]">
+  <img class="img-fluid mx-auto" width="96" height="96" [src]="image" [alt]="name" loading="lazy" />
+  <small class="text-muted mt-2">#{{ id }}</small>
+  <span class="fw-semibold text-capitalize">{{ name }}</span>
+</a>

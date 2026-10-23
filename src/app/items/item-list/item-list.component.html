@@ -1,0 +1,20 @@
+<h1 class="mb-4">Items</h1>
+@if (data$ | async; as data) {
+  <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+    @for (item of data.items; track item.id) {
+      <app-item-item class="col" [id]="item.id" [name]="item.name" />
+    }
+  </div>
+  <ngb-pagination
+    class="d-flex justify-content-center mt-4"
+    [collectionSize]="data.count"
+    [pageSize]="pageSize"
+    [page]="page"
+    [maxSize]="5"
+    [rotate]="true"
+    [boundaryLinks]="true"
+    (pageChange)="onPageChange($event)"
+  />
+} @else {
+  <div class="text-center my-5"><div class="spinner-border text-danger"></div></div>
+}

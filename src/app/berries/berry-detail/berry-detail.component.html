@@ -1,0 +1,30 @@
+<a class="btn btn-outline-danger mb-3" routerLink="/berries">← Volver al listado</a>
+@if (berry$ | async; as b) {
+  <div class="card">
+    <div class="card-body">
+      <img class="img-fluid d-block mx-auto" width="120" height="120" [src]="image(b.item.name)" [alt]="b.name" />
+      <h2 class="text-capitalize text-center">#{{ b.id }} {{ b.name }} berry</h2>
+      <table class="table table-sm w-auto mx-auto text-capitalize">
+        <tr><th>Tiempo de crecimiento</th><td>{{ b.growth_time }} h</td></tr>
+        <tr><th>Cosecha máxima</th><td>{{ b.max_harvest }}</td></tr>
+        <tr><th>Tamaño</th><td>{{ b.size }} mm</td></tr>
+        <tr><th>Suavidad</th><td>{{ b.smoothness }}</td></tr>
+        <tr><th>Sequedad del suelo</th><td>{{ b.soil_dryness }}</td></tr>
+        <tr><th>Firmeza</th><td>{{ b.firmness.name }}</td></tr>
+        <tr><th>Poder Natural Gift</th><td>{{ b.natural_gift_power }}</td></tr>
+        <tr><th>Tipo Natural Gift</th><td>{{ b.natural_gift_type.name }}</td></tr>
+      </table>
+      <h3 class="h5 mt-3">Sabores</h3>
+      @for (f of b.flavors; track f.flavor.name) {
+        @if (f.potency > 0) {
+          <div class="row align-items-center mb-1">
+            <div class="col-4 col-md-3 text-capitalize">{{ f.flavor.name }}</div>
+            <div class="col"><ngb-progressbar type="danger" [value]="f.potency" [max]="40" [showValue]="true" /></div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+} @else {
+  <div class="text-center my-5"><div class="spinner-border text-danger"></div></div>
+}
